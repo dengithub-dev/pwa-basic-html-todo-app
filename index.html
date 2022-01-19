@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="theme-color" content="#000000"/>
+		<meta name="description" content="PWA Todo App"/>
+		<link rel="apple-touch-icon" href="fav.png"/>
+        <link rel="icon" type="image/png" href="fav.png" />
+        <title>PWA Dencio's Todo App</title>
+        <link rel="manifest" href="manifest.json">
+        <style>
+            body {
+                font-family: Roboto;
+                align-items: center;
+                align-content: center;
+            }
+            form {
+                align-self: center;
+                align-items: center;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                font-size: 24px;
+            }
+            a {
+                text-decoration: none;
+                color: #0000FF;
+                font-size: 12px;
+            }
+            input[type="text"]{
+                margin: 30px;
+                padding: 10px;
+                border-radius: 10px;
+                outline: none important;
+                border-width: 1px;
+                box-shadow: 0 0 10px gray;
+                width: 60%;
+                align-self: center;
+            }
+            input[type="button"]{
+                margin: 30px;
+                padding: 10px;
+                border-radius: 20px;
+                outline: none important;
+                border-width: 1px;
+                box-shadow: 0 0 10px gray;
+
+            }
+            ul {
+                margin: 30px;
+                padding: 15px;
+                border-radius: 5px;
+                outline: none important;
+                border-width: 0px;
+                box-shadow: 0 0 1px gray;
+                word-wrap: break-word;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script>
+            function createNewElement()
+            {
+                // First create a DIV element.
+                var get_link = document.getElementById('text_add').value;
+                var txtNewInputBox = document.createElement('div');
+                // Then add the content (a new input box) of the element.
+                txtNewInputBox.innerHTML = "<ul id=" + get_link + '_ul' + "><strong id='"+ get_link +"'>" + get_link + "</strong><br><a href='#' onclick=document.getElementById('res').innerHTML='"+ get_link +"';strike_list()>Done</a>&nbsp;&nbsp;&nbsp<a href='#' onclick=document.getElementById('res').innerHTML='"+ get_link +"';delete_list()>Remove</a></ul>";
+                // Finally put it where it is supposed to appear.
+                document.getElementById("newElementId").appendChild(txtNewInputBox);
+            }
+            function strike_list()
+            {
+                //var get_id = document.getElementById('res').innerHTML;
+                var get_id = document.getElementById('res').innerHTML;
+                //strike get_id
+                document.getElementById(get_id).style.textDecoration = "line-through";
+                //document.getElementById(get_id).strike();
+            }
+            function delete_list()
+            {
+                var get_id = document.getElementById('res').innerHTML + '_ul';
+                //remove get_id
+                document.getElementById(get_id).remove();
+            }
+        </script>
+    </head>
+    <body>
+        <form id="upp">
+            <input type="text" id="text_add" list="suggestions" size="50px" placeholder="Input your Todo list and hit Enter key...">
+            
+            <div id="newElementId"></div>
+        </form>
+        <p id='res'hidden></p>
+        <script>
+            var inp = document.getElementById("upp");
+            inp.addEventListener("keypress", function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    var text = document.getElementById("text_add").value;
+                    //check if text is empty
+                    if(text.length == 0){
+                        alert("Please enter a task");
+                    }
+                    else if (text.length > 0){
+                        //run createNewElement()
+                        createNewElement();
+                        //empty text field
+                        document.getElementById("text_add").value = "";
+                    }
+                    
+                }
+            });
+        </script>
+        <script src="index.js"></script>
+    </body>
+</html>
